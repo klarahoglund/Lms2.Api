@@ -1,12 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Lms2.Api.Data;
+using Lms2.Data.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<Lms2ApiContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Lms2ApiContext") ?? throw new InvalidOperationException("Connection string 'Lms2ApiContext' not found.")));
 
 // Add services to the container.
-
+// Svars medelande vid fel typp kod 400
 builder.Services.AddControllers(opt => opt.ReturnHttpNotAcceptable = true)
     .AddNewtonsoftJson()
     .AddXmlDataContractSerializerFormatters();

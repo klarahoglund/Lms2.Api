@@ -13,8 +13,8 @@ namespace Lms2.Core.Entities
 
         public DateTime StartTime { get; set; }
 
-        public int? CourseId;
+        //public int? CourseId;
 
-        public Course Course { get; set; }
+        //public Course Course { get; set; }
     }
 }
