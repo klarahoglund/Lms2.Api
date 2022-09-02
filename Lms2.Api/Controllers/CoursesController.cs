@@ -10,7 +10,7 @@ using Lms2.Data.Data;
 
 namespace Lms2.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/courses")]
     [ApiController]
     public class CoursesController : ControllerBase
     {
@@ -29,7 +29,8 @@ namespace Lms2.Api.Controllers
           {
               return NotFound();
           }
-            return await _context.Course.ToListAsync();
+            return await _context.Course
+                .Include(e => e.Modules ).ToListAsync();
         }
 
         // GET: api/Courses/5

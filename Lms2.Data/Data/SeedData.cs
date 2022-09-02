@@ -20,6 +20,9 @@ namespace Lms2.Data.Data
             if (context is null) throw new ArgumentNullException(nameof(context));
             db = context;
 
+            //db.Database.EnsureDeleted();
+            //db.Database.Migrate();
+
             if (await db.Course.AnyAsync()) return; // om det redan finns data i den tabellen
 
             faker = new Faker("sv");
@@ -41,11 +44,32 @@ namespace Lms2.Data.Data
                 var title = faker.Hacker.Verb();
                 var start = DateTime.Now.AddDays(faker.Random.Int(0, 30));
 
-                var course = new Course(title, start);  
+                var course = new Course(title, start)
+                {
+
+                    Modules = GenerateModules()
+                    
+                };
 
                 courses.Add(course);    
             }
             return courses;
+            
+        }
+
+        private static ICollection<Module> GenerateModules()
+        {
+            var modules = new List<Module>();
+            for (int i = 0; i < 2; i++)
+            {
+                var module = new Module()
+                {
+                    Title = faker.Hacker.Verb(),
+                    StartTime = DateTime.Now.AddDays(faker.Random.Int(0, 30))
+                };
+                modules.Add(module);
+            }
+            return modules;
             
         }
     }
